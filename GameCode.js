@@ -5,20 +5,11 @@ var canv = document.getElementById("canvas") ,
     canv.height = window.innerHeight;
 
 var x = 20;
-
-/*
-setInterval(function () {
-  ctx.fillRect(x++,20,100,100);
-
-},16)
-*/
-
 let angle = 0 ;
 var x = canv.width / 2;
 var y = canv.height / 2;
 
 var shift = 3;
-
 var direction;
 
 function checkBorderX(x) {
@@ -42,7 +33,6 @@ function checkBorderY(y) {
 }
 
 document.addEventListener('keydown',function (e) {
-  //console.log(e.keyCode);
   switch (e.keyCode) {
     case 38:
     direction = 'up';
@@ -66,6 +56,10 @@ document.addEventListener('keydown',function (e) {
   }
 });
 
+document.addEventListener('keyup',function (e) {
+          direction = 'stop';
+});
+
 console.log("IMG");
 
 // Создаем объект изображения
@@ -80,20 +74,22 @@ img1.onload = function() {
 
 img.src = "crusader.png";
 
-var countfrmaesStanding = 12 ;
+var countfrmaesStanding = 6 ;
 let frames = 0 ;
 let frmaesCOunt = 0;
 function drawCrusaderStand() {
 
-var frameSizeX = 82;
+var frameSizeX = 90;
+var frameShift = 5;
+var frameSlowSpeed = 8;
 
   ctx.drawImage(img, 0 + (frameSizeX*((frames ) % countfrmaesStanding)) ,
-                     0 + 128 * 4  ,
+                     0 + 128 * frameShift  ,
                      frameSizeX   ,
                      128  ,
-      x, y,frameSizeX, 128);
+      x , y,frameSizeX, 128);
       frmaesCOunt++;
-      if (frmaesCOunt >= 4) {
+      if (frmaesCOunt >= frameSlowSpeed ) {
               frmaesCOunt = 0;
               frames ++;
       }
@@ -117,6 +113,7 @@ animation({
     ctx.beginPath();
     ctx.fillStyle = 'white';
     ctx.fill();
+
 
   } ,
   update() {
